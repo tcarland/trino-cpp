@@ -4,5 +4,7 @@
 *.json
 
 build
+bin
+lib
 
 .trino_password

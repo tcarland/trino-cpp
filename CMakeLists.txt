@@ -30,7 +30,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 tcmake_require(LIBCURL)
 
-# ── Library: trino-query ──────────────────────────────────────────────────────
+# ── Library: trinoquery ──────────────────────────────────────────────────────
 
 tcmake_add_library(trino-query
     SOURCES         src/trino-query.cpp
@@ -38,9 +38,9 @@ tcmake_add_library(trino-query
     TYPE            STATIC
 )
 
-# ── Executable: trino-example ─────────────────────────────────────────────────
+# ── Executable: trinoquery ─────────────────────────────────────────────────
 
-tcmake_add_executable(trino-example
+tcmake_add_executable(trinoquery
     SOURCES  src/main.cpp
     LIBS     trino-query
 )

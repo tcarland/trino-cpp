@@ -1,7 +1,7 @@
-# trino-cpp-example
+# trino-cpp
 
-A minimal C++17 example of querying [Trino](https://trino.io) via its HTTP REST
-API using **libcurl** for transport and **nlohmann/json** for JSON parsing.
+A C++17 library for querying [Trino](https://trino.io) via its HTTP REST
+API using **libcurl** for transport.
 
 There is no official C++ driver for Trino; this project demonstrates how to
 speak the Trino REST protocol directly and can serve as a starting point for
@@ -16,27 +16,30 @@ embedding Trino queries in a C++ application.
 | C++17 compiler | GCC 9 / Clang 9 / MSVC 2019+ | |
 | CMake | 3.14+ | |
 | libcurl | any recent | `libcurl-dev` (Debian/Ubuntu) or `libcurl-devel` (RHEL/Fedora) |
-| nlohmann/json | 3.11+ | Fetched automatically by CMake if not already installed |
 
 ---
 
 ## Build
 
 ```bash
+
+# via cmake
 cmake -S . -B build
 cmake --build build
-
 rm -rf build && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release 2>&1 && cmake --build build --parallel 2>&1
+# use the wrapper
+make
 ```
 
-The binary is written to `build/trino-example`.
+The library is written to `build/lib/libtrino-query`.
+The binary is written to `build/bin/trino-query`.
 
 ---
 
 ## Usage
 
 ```
-./build/trino-example <uri> <catalog> <schema> <table> <username> <password-file> [limit]
+./build/trino-query <uri> <catalog> <schema> <table> <username> <password-file> [limit]
 
   uri            Trino coordinator base URI  (e.g. http://localhost:8080)
   catalog        Trino catalog name
@@ -59,13 +62,13 @@ chmod 600 ~/.trino_password
 Query all rows from the TPCH `orders` table with authentication:
 
 ```bash
-./build/trino-example http://localhost:8080 tpch sf1 orders myuser ~/.trino_password
+./build/bin/trino-query http://localhost:8080 tpch sf1 orders myuser ~/.trino_password
 ```
 
 Limit to the first 20 rows:
 
 ```bash
-./build/trino-example http://localhost:8080 tpch sf1 orders myuser ~/.trino_password 20
+./build/bin/trino-query http://localhost:8080 tpch sf1 orders myuser ~/.trino_password 20
 ```
 
 Sample output:
@@ -132,7 +135,7 @@ sequenceDiagram
 ## Project layout
 
 ```
-trino-c++-example/
+trino-cpp/
 ├── CMakeLists.txt
 ├── include/
 │   └── trino-query.h      # Public API: trino::Client, QueryResult, Column
@@ -155,6 +158,4 @@ trino::QueryResult result = client.selectAll("orders", 100);
 ```
 
 All cell values are normalised to `std::string`: `NULL` cells become the
-literal string `"NULL"`, non-string scalars (integers, booleans, etc.) are
-serialised with `nlohmann::json::dump()`, and complex types (arrays, maps) are
-serialised as JSON text.
+literal string `"NULL"`. 
