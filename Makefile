@@ -1,9 +1,9 @@
 # Makefile wrapper for tcmake build system
-# Author: tcmake wrapper
+# Author: tca
 # Date:   2026-07-03
 
 TCMAKE_BUILD := ../tcmake/bin/tcmake_build.sh
-PREFIX       ?= /usr/local
+PREFIX       ?= .
 
 .PHONY: all build clean distclean test install help
 
@@ -42,7 +42,7 @@ help:
 	@echo "  make build        - Configure and build"
 	@echo "  make config       - Reconfigure CMake"
 	@echo "  make test         - Build and run tests"
-	@echo "  make install      - Install to PREFIX (default: /usr/local)"
+	@echo "  make install      - Install to PREFIX (default: .)"
 	@echo "  make clean        - Remove build artifacts"
 	@echo "  make distclean    - Remove entire build directory"
 	@echo "  make help         - Show this help message"
