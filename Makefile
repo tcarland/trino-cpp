@@ -7,8 +7,13 @@ TCMAKE_PREFIX ?= $(TCAMAKE_PREFIX)
 RSYNC         := rsync -av
 MKDIR         := mkdir -p
 
-.PHONY: all build clean distclean test install help
+ifeq ($(TCAMAKE_PREFIX),)
+	export TCAMAKE_PREFIX := .
+endif
 
+
+.PHONY: all build clean distclean test install help
+	
 all: build
 
 build:
@@ -23,12 +28,10 @@ install:
 ifdef TCMAKE_PREFIX
 	$(MKDIR) $(TCMAKE_PREFIX)/include/trinoquery
 	$(MKDIR) $(TCMAKE_PREFIX)/lib
-	$(RSYNC) --delete include/ $(TCAMAKE_PREFIX)/include/tcanetpp/
-	$(RSYNC) lib/ $(TCAMAKE_PREFIX)/lib/
+	$(RSYNC) build/bin/ $(TCAMAKE_PREFIX)/bin/
+	$(RSYNC) include/ $(TCAMAKE_PREFIX)/include/trinoquery/
+	$(RSYNC) build/lib/ $(TCAMAKE_PREFIX)/lib/
 	@echo
-else
-	@$(RSYNC) build/bin ./
-	@$(RSYNC) build/lib ./
 endif
 
 clean:
@@ -37,7 +40,7 @@ clean:
 
 distclean:
 	@$(TCMAKE_BUILD) distclean
-	rm -rf bin lib
+	rm -rf bin lib include/trinoquery
 	@echo
 
 # Reconfigure (useful after changing CMakeLists.txt)

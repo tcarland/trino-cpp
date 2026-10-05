@@ -115,7 +115,7 @@ extractStringField ( const std::string & body, const std::string & key )
 
 // ── Client ────────────────────────────────────────────────────────────────────
 
-const std::string Client::Version = "0.1.7";
+const std::string Client::Version = "0.1.8";
 
 
 Client::Client ( std::string uri,    std::string catalog,
