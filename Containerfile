@@ -1,4 +1,4 @@
-FROM ghcr.io/tcarland/tcanetpp:v1.6.15
+FROM ghcr.io/tcarland/tcanetpp:v1.7.1
 
 ENV TCMAKE_PROJECT=/opt
 ENV TCMAKE_HOME=/opt/tcmake
