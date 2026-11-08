@@ -19,11 +19,10 @@ jobs:
       packages: write
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Build Container
       run: docker build -t ${{ env.IMAGE_NAME }} -f Containerfile .
 
     - name: Run Build Process
       run: docker run --rm ${{ env.IMAGE_NAME }} /bin/bash -c "cd /opt/trino-cpp && make"
-
